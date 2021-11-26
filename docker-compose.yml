@@ -1,0 +1,35 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgres:13.3-alpine
+    environment:
+      - LANG=ja_JP.UTF-8
+      - LANGUAGE=ja_JP:ja
+      - LC_ALL=ja_JP.UTF-8
+      - POSTGRES_USER=appdb
+      - POSTGRES_DB=appdb
+      - POSTGRES_PASSWORD=appdb
+      - POSTGRES_INITDB_ARGS="--encoding=UTF-8"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres-data/:/var/lib/postgresql/data/
+
+  server:
+    build:
+      context: .
+      dockerfile: ./server/Dockerfile
+    image: server_dev
+    container_name: server_dev
+    environment:
+      - DB_HOST=host.docker.internal
+      - DB_DATABASE=appdb
+      - DB_USER=appdb
+      - DB_PASSWORD=appdb
+    ports:
+      - "5000:5000"
+    volumes:
+      - "./server/src:/usr/src/src"
+    tty: true
+  # command: bash -c "npm run dev"
