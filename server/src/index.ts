@@ -48,8 +48,8 @@ const maximumVersionFromTable = async ():Promise<string|null> => {
   return result.max
 }
 
-const insertVersionIntoTableSql = (version: string): string => {
-  return `INSERT INTO schema_migrations(version) VALUES('${version}')`
+const insertVersionIntoTable = async (version: string) => {
+  await db.none(`INSERT INTO schema_migrations(version) VALUES($1)`, version)
 }
 
 const readMigrationFile = (migration: string): QueryFile => {
@@ -70,16 +70,14 @@ const executeMigrations = async () => {
     migrations = migrations.slice(ix + 1)
   }
 
-  let sqls: Array<QueryFile|string> = []
-  migrations.forEach(m => {
-    sqls.push(readMigrationFile(m))
-    sqls.push(insertVersionIntoTableSql(m))
-  })
-
   try {
-    await db.task(t => t.batch(sqls.map(sql => t.none(sql))))
+    for(let m of migrations) {
+      await db.none(readMigrationFile(m))
+      await insertVersionIntoTable(m)
+    }
   } catch (err) {
     console.error(err)
+    return
   }
 }
 
