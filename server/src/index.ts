@@ -31,17 +31,12 @@ const migrationFiles = () => {
   return migrations
 }
 
-const makeMigrationsTableUnlessExists = async () => {
+const maximumVersionFromTable = async ():Promise<string|null> => {
   logEnable = false
   await db.none(`CREATE TABLE IF NOT EXISTS schema_migrations (
     version VARCHAR(255) PRIMARY KEY,
     created_at TIMESTAMP DEFAULT current_timestamp
   )`)
-  logEnable = true
-}
-
-const maximumVersionFromTable = async ():Promise<string|null> => {
-  logEnable = false
   const result = await db.one('SELECT MAX(version) FROM schema_migrations')
   logEnable = true
   return result.max
@@ -91,7 +86,6 @@ const createMigartionFile = (comment: string|null = null) => {
 }
 
 makeMigrationsDirectoryUnlessExists()
-makeMigrationsTableUnlessExists()
 
 if (process.argv.length == 3 && process.argv[2] == "up") {
   executeMigrations()

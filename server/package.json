@@ -1,6 +1,6 @@
 {
   "name": "pg-simple-migration",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A simple migration tool using pg-promise",
   "main": "dist/index.js",
   "bin": "dist/index.js",
