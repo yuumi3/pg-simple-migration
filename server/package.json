@@ -1,16 +1,26 @@
 {
-  "name": "server",
+  "name": "pg-simple-migration",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A simple migration tool using pg-promise",
+  "main": "dist/index.js",
+  "bin": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuumi3/pg-simple-migration.git"
+  },
   "scripts": {
     "dev": "ts-node-dev --respawn src/index.ts",
-    "start": "ts-node src/index.ts",
-    "service": "tsc; node dist/"
+    "build": "tsc"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["migration", "pg-promise", "postgresql"],
+  "author": "Yuumi Yoshida <yy@ey-office.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0"
+  },
+  "bugs": {
+    "url": "https://github.com/yuumi3/pg-simple-migration/issues"
+  },
   "dependencies": {
     "pg-promise": "^10.11.1"
   },

@@ -27,9 +27,11 @@ services:
       - DB_DATABASE=appdb
       - DB_USER=appdb
       - DB_PASSWORD=appdb
+      - MIGRATIONS_PATH=/usr/src/src/migrations/
     ports:
       - "5000:5000"
     volumes:
       - "./server/src:/usr/src/src"
+      - "./server/dist:/usr/src/dist"
     tty: true
   # command: bash -c "npm run dev"

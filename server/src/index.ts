@@ -2,7 +2,6 @@
 
 import pgPromise, { QueryFile } from 'pg-promise'
 import fs from 'fs'
-import path from 'path'
 
 let logEnable = false
 const log = (s: any) => logEnable ?
@@ -17,7 +16,7 @@ const db = pgp({
   password: process.env.DB_PASSWORD
 });
 
-const MigrationsDirectory = path.join(__dirname, "../migrations/")
+const MigrationsDirectory = process.env.MIGRATIONS_PATH ?? "./"
 
 
 const makeMigrationsDirectoryUnlessExists = () => {
