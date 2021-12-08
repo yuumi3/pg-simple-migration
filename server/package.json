@@ -10,6 +10,7 @@
   },
   "scripts": {
     "dev": "ts-node-dev --respawn src/index.ts",
+    "start": "ts-node src/index.ts",
     "build": "tsc"
   },
   "keywords": ["migration", "pg-promise", "postgresql"],
